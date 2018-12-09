@@ -1,4 +1,3 @@
-import jQuery from './jquery-2.1.0.min.js'
 <template>
   <div>
     <div class="row">
@@ -158,18 +157,8 @@ export default {
       }
       var call_url = "api/" + this.request;
       axios.get(call_url)
-      .then(function(data) {
-          // if (data["status"] == 200) {
-          //   var d = jQuery.parseJSON(data["responseText"]);
-          //   this.result = JSON.stringify(d, null, "\t");
-          // } else if (data["status"] == 404) {
-          //   this.result = data["status"] + " " + data["statusText"];
-          // }
-
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
+      .then(data => {
+        this.result = data
       })
     }
   }
