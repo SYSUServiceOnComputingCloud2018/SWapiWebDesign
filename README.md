@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # sw-api
 
 ## Project setup
@@ -27,3 +28,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+=======
+# SWapi-
+前端仓库
+>>>>>>> 825909ee460c199e8f342db24f236be5fdc4b264
