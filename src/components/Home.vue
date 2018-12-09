@@ -1,3 +1,4 @@
+import jQuery from './jquery-2.1.0.min.js'
 <template>
   <div>
     <div class="row">
