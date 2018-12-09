@@ -7,7 +7,8 @@
         <p>
           <b>Planets, Spaceships, Vehicles, People, Films and Species</b>
         </p>
-        <p>From all
+        <p>
+          From all
           <b>SEVEN</b> Star Wars films
         </p>
         <h4>Now with The Force Awakens data!</h4>
@@ -21,57 +22,33 @@
         <h1 class="center">Try it now!</h1>
         <div class="input-group">
           <span class="input-group-addon">https://swapi.co/api/</span>
-          <input id="interactive" type="text" class="form-control" placeholder="people/1/">
+          <input
+            id="interactive"
+            type="text"
+            class="form-control"
+            placeholder="people/1/"
+            :value="request"
+          >
           <span class="input-group-btn">
             <button onClick="interactive_call();return false;" class="btn btn-primary">request</button>
           </span>
         </div>
-        <small>Need a hint? try
-          <a href="#" onClick="update('people/1/');return false;">
+        <small>
+          Need a hint? try
+          <a  @click="updateRequest('people/1/')">
             <i>people/1/</i>
           </a> or
-          <a href="#" onClick="update('planets/3/');return false;">
+          <a  @click="updateRequest('planets/3/')">
             <i>planets/3/</i>
           </a> or
-          <a href="#" onClick="update('starships/9/');return false;">
+          <a  @click="updateRequest('starships/9/')">
             <i>starships/9/</i>
           </a>
         </small>
         <p class="lead pad_top">Result:</p>
         <div class="well">
           <pre id="interactive_output" class="pre-scrollable">
-{
-	"name": "Luke Skywalker",
-	"height": "172",
-	"mass": "77",
-	"hair_color": "blond",
-	"skin_color": "fair",
-	"eye_color": "blue",
-	"birth_year": "19BBY",
-	"gender": "male",
-	"homeworld": "https://swapi.co/api/planets/1/",
-	"films": [
-		"https://swapi.co/api/films/2/",
-		"https://swapi.co/api/films/6/",
-		"https://swapi.co/api/films/3/",
-		"https://swapi.co/api/films/1/",
-		"https://swapi.co/api/films/7/"
-	],
-	"species": [
-		"https://swapi.co/api/species/1/"
-	],
-	"vehicles": [
-		"https://swapi.co/api/vehicles/14/",
-		"https://swapi.co/api/vehicles/30/"
-	],
-	"starships": [
-		"https://swapi.co/api/starships/12/",
-		"https://swapi.co/api/starships/22/"
-	],
-	"created": "2014-12-09T13:50:51.644000Z",
-	"edited": "2014-12-20T21:17:56.891000Z",
-	"url": "https://swapi.co/api/people/1/"
-}
+{{result}}
           </pre>
         </div>
       </div>
@@ -94,7 +71,9 @@
         <h4 class="center">How can I use it?</h4>
         <p>
           All the data is accessible through our HTTP web API. Consult our
-          <a href="/documentation">documentation</a> if
+          <a
+            href="/documentation"
+          >documentation</a> if
           you'd like to get started.
         </p>
         <p>
@@ -114,8 +93,11 @@
           data-amount="1000" data-panel-label="Donate">
           </script>-->
         </form>
-        <p>This project is open source and you can contribute
-          <a href="https://github.com/phalt/swapi">on GitHub</a>.
+        <p>
+          This project is open source and you can contribute
+          <a
+            href="https://github.com/phalt/swapi"
+          >on GitHub</a>.
         </p>
       </div>
       <div class="col-sm-1 col-lg-1 col-md-1"></div>
@@ -125,10 +107,73 @@
 
 <script>
 export default {
-  name: "Home"
+  name: "Home",
+  data() {
+    return {
+      request: "",
+      result: {
+        name: "Luke Skywalker",
+        height: "172",
+        mass: "77",
+        hair_color: "blond",
+        skin_color: "fair",
+        eye_color: "blue",
+        birth_year: "19BBY",
+        gender: "male",
+        homeworld: "https://swapi.co/api/planets/1/",
+        films: [
+          "https://swapi.co/api/films/2/",
+          "https://swapi.co/api/films/6/",
+          "https://swapi.co/api/films/3/",
+          "https://swapi.co/api/films/1/",
+          "https://swapi.co/api/films/7/"
+        ],
+        species: ["https://swapi.co/api/species/1/"],
+        vehicles: [
+          "https://swapi.co/api/vehicles/14/",
+          "https://swapi.co/api/vehicles/30/"
+        ],
+        starships: [
+          "https://swapi.co/api/starships/12/",
+          "https://swapi.co/api/starships/22/"
+        ],
+        created: "2014-12-09T13:50:51.644000Z",
+        edited: "2014-12-20T21:17:56.891000Z",
+        url: "https://swapi.co/api/people/1/"
+      }
+    };
+  },
+  methods: {
+    updateRequest(value) {
+      this.request = value;
+      //interactive_call();
+    },
+    interactive_call() {
+      if (this.request == "") {
+        this.request = "people/1/";
+      }
+      var call_url = "api/" + this.request;
+      jQuery
+        .ajax({
+          dataType: "json",
+          url: call_url,
+          context: document.body
+        })
+        .complete(function(data) {
+          if (data["status"] == 200) {
+            var d = jQuery.parseJSON(data["responseText"]);
+            this.result = JSON.stringify(d, null, "\t");
+          } else if (data["status"] == 404) {
+            this.result = data["status"] + " " + data["statusText"];
+          }
+        });
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
+    
+    
