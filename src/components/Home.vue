@@ -27,7 +27,7 @@
             type="text"
             class="form-control"
             placeholder="people/1/"
-            :value="request"
+            v-model="request"
           >
           <span class="input-group-btn">
             <button @click="interactive_call" class="btn btn-primary">request</button>
@@ -149,7 +149,7 @@ export default {
   methods: {
     updateRequest(value) {
       this.request = value;
-      //interactive_call();
+      this.interactive_call();
     },
     interactive_call() {
       if (this.request == "") {
@@ -158,7 +158,9 @@ export default {
       var call_url = "api/" + this.request;
       axios.get(call_url)
       .then(data => {
-        this.result = data
+        var temp = data['data'];
+        temp = temp.substr(temp.indexOf('{'));
+        this.result=temp;
       })
     }
   }
