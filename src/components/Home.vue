@@ -27,13 +27,13 @@
           </span>
         </div>
         <small>Need a hint? try
-          <a href="#" onClick="update('people/1/');return false;">
+          <a onClick="update('people/1/');return false;">
             <i>people/1/</i>
           </a> or
-          <a href="#" onClick="update('planets/3/');return false;">
+          <a onClick="update('planets/3/');return false;">
             <i>planets/3/</i>
           </a> or
-          <a href="#" onClick="update('starships/9/');return false;">
+          <a onClick="update('starships/9/');return false;">
             <i>starships/9/</i>
           </a>
         </small>
