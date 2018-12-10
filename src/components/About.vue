@@ -9,5 +9,4 @@ export default {
   name: 'About'
 }
 </script>
-/**/
 
