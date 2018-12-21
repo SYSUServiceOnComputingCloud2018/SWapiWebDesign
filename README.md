@@ -1,6 +1,7 @@
 # sw-api 前端仓库
 
-## 1.How-TO
+## 1.How-To
+
 
 ### Project setup
 ```
@@ -17,9 +18,40 @@ npm run serve
 npm run build
 ```
 
-## 2协作方式
+## 2 Using Docker
 
-### 2.1 协作方式
+### build a image from DockerFile
+
+``` shell
+# 位于项目的根目录下
+docker build -t my-swapi-vue:v1 .
+```
+
+### run contrainer
+
+``` shell
+
+docker run -it -p 8080:8080 my-swapi-vue:v1
+
+```
+
+## 3协作方式
+
+[参考网站](https://github.com/SYSUMonkeyEye/MonkeyEye-FE)
+
+### 3.1  准备工作
+
+在github上fork本仓库到你自己的github，将你fork之后的远程仓库克隆到本地，并在你的本地仓库上添加上游仓库，即源仓库。fork一般是fork了仓库的master分支，所以可能还需要自己去切出dev分支然后拉取源仓库dev分支上的内容。
+
+``` bash
+git clone https://github.com/{你的github仓库}
+# 上游的源仓库地址只需添加一次
+git remote add upstream https://github.com/{组织仓库}
+# 切出dev分支并拉取源仓库dev分支上的内容
+git checkout -b dev
+git pull upstream dev
+```
+### 3.2 方式-1
 
 要开发某个模块的时候，在你的本地仓库创建一个分支，例如mydev。
 
@@ -67,7 +99,7 @@ git branch -d mydev
 
 推送到自己的远程仓库后，就可以到github上面给我发Pull Request了，然后等待我合并你的代码。
 
-#### 2.2 协作方式
+#### 2.3 方式-2
 
 嫌上面太麻烦？你也可以直接在fork之后的的dev分支上面进行开发，然后在发送PR之前先从源仓库拉取更新。
 
