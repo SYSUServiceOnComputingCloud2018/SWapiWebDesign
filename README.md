@@ -112,3 +112,57 @@ git pull upstream dev
 # 推送到你自己的远程仓库，注意这里是push到origin dev，不是upstream dev
 git push origin dev
 ```
+
+## 4.应用容器化
+
+### 4.1 使用Dockerfile文件构建容器的原因：
+
+Dockerfile是一种被Docker程序解释的脚本，Dockerfile由一条一条的指令组成，每条指令对应Linux下面的一条命令。Docker程序将这些Dockerfile指令翻译真正的Linux命令。Dockerfile有自己书写格式和支持的命令，Docker程序解决这些命令间的依赖关系，类似于Makefile。Docker程序将读取Dockerfile，根据指令生成定制的image。相比image这种黑盒子，Dockerfile这种显而易见的脚本更容易被使用者接受，它明确的表明image是怎么产生的。有了Dockerfile，当我们需要定制自己额外的需求时，只需在Dockerfile上添加或者修改指令，重新生成image即可，省去了敲命令的麻烦。
+
+### 4.2 前端应用容器化具体操作：
+
+- 指定基础image：
+
+``` shell
+FROM node:9.11.1-alpine
+```
+
+- 安装软件：
+
+``` shell
+# install simple http server for serving static content
+RUN npm install -g cnpm --registry=https://registry.npm.taobao.org && cnpm install -g http-server
+# install project dependencies
+# RUN npm install
+RUN cnpm install
+# build app for production with minification
+RUN npm run build
+```
+
+- 复制路径：
+
+``` shell
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
+# copy project files and folders to the current working directory (i.e. 'app' folder)
+COPY . .
+```
+
+- 切换工作路径：
+
+``` shell
+# make the 'app' folder the current working directory
+WORKDIR /app
+```
+
+- 指定容器映射到主机的端口：
+
+``` shell
+EXPOSE 8080
+```
+
+- 设置container启动时执行的操作：
+
+``` shell
+CMD [ "http-server", "dist" ]
+```
